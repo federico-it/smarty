@@ -14,18 +14,18 @@
     "http-proxy-middleware": "^2.0.6",
     "vue": "^3.3.12",
     "vue-router": "^4.2.5",
-    "vue-template-compiler": "^2.7.16",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-router": "^5.0.8",
     "@vue/cli-plugin-vuex": "^5.0.8",
-    "@vue/cli-service": "^3.3.1",
+    "@vue/cli-service": "^5.0.8",
     "@vue/eslint-config-standard": "^8.0.1",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "vercel": "^32.3.0"
+    "vercel": "^32.3.0",
+    "vue-template-compiler": "^2.7.16"
   }
 }
