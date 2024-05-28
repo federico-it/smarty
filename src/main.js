@@ -5,7 +5,7 @@ import '@element-plus/theme-chalk/dist/index.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import './index.css'
 createApp(App)
   .use(ElementPlus)
   .use(store)

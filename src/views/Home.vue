@@ -1,7 +1,21 @@
 <template>
   <div id="nav">
+    <div class="flex py-6 px-8 items-center gap-x-6">
+      <a href="/">
+        <div class="flex items-center gap-x-6">
+      <img class="w-14 rounded-md" src="/images.png">
+      <div class="flex flex-col">
+      <span class=" text-lg font-bold uppercase italic">Smarty</span>
+      <span class=" text-xs font-bold  italic">Smart Life Web App</span>
+    </div>
+    </div>
+    </a>
+    
+    </div>
+    <div class="italic mb-6">Benvenuto inserisci la tua mail e la tua password di Smart Life</div>
+    <div >
     <el-form v-if="!loginState" :model="loginForm" :inline="true">
-      <el-form-item label="Email address" size="medium">
+      <el-form-item label="Email" size="medium">
         <el-input v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item label="Password">
@@ -12,9 +26,10 @@
       </el-form-item>
     </el-form>
     <template v-else>
-      <el-button type="default" @click="refreshDevices()">Refresh</el-button>
-      <el-button type="default" @click="logout()">Logout</el-button>
+      <el-button type="default" @click="refreshDevices()">Aggiorna</el-button>
+      <el-button type="default" @click="logout()">Esci</el-button>
     </template>
+  </div>
   </div>
   <div id="devices">
     <div v-for="device in devicesSorted" :key="device.id">
@@ -42,6 +57,7 @@
       </el-card>
     </div>
   </div>
+  <div id="footer" class="absolute bottom-0 left-0 right-0 "><div class="mb-3 flex justify-center "><span class="uppercase mr-2">Smarty ©</span><span>{{ date }}&nbsp - &nbsp</span><span>Made with ❤️ by&nbsp;</span><a class="hover:text-sky-600 hover:font-bold" target="_blank" href="https://federicomengascini.com">Federico</a></div></div>
 </template>
 
 <script>
@@ -56,7 +72,8 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from "element-plus"
 
 import tuya from '@/libs/tuya'
-
+const year = new Date()
+const date = `${year.getFullYear()}`;
 const homeAssistantClient = new tuya.HomeAssistantClient(
   JSON.parse(localStorage.getItem('session'))
 )
@@ -143,8 +160,7 @@ const triggerScene = async (device) => {
 <style scoped>
 #nav {
   margin: 0 auto;
-  margin-top: 64px;
-  margin-bottom: 64px;
+
 }
 
 .el-card.device {
