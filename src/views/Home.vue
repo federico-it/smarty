@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <div class="flex py-6 px-8 items-center gap-x-6">
+    <div class="flex py-6 px-8 items-center gap-x-6 ">
       <a href="/">
         <div class="flex items-center gap-x-6">
       <img class="w-14 rounded-md" src="/images.png">
@@ -12,23 +12,30 @@
     </a>
     
     </div>
-    <div class="italic mb-6">Benvenuto inserisci la tua mail e la tua password di Smart Life</div>
+    <div v-if="!loginState" class="italic mb-6 font-semibold px-8">Benvenuto inserisci la tua mail e la tua password di Smart Life per iniziare.</div>
     <div >
-    <el-form v-if="!loginState" :model="loginForm" :inline="true">
+    <el-form v-if="!loginState" :model="loginForm" :inline="false">
+      <div class=" gap-x-2 justify-center sm:flex  px-8 flex flex-col sm:flex-row ">
       <el-form-item label="Email" size="medium">
         <el-input v-model="loginForm.username"></el-input>
       </el-form-item>
-      <el-form-item label="Password">
+      <el-form-item  label="Password">
         <el-input type="password" v-model="loginForm.password"></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="login()">Login</el-button>
+      <el-form-item class="bottone">
+        <el-button type="primary" @submit="login()" @click="login()">Login</el-button>
       </el-form-item>
+    </div>
+
     </el-form>
+    
     <template v-else>
+      <div class="mb-6">
       <el-button type="default" @click="refreshDevices()">Aggiorna</el-button>
       <el-button type="default" @click="logout()">Esci</el-button>
+    </div>
     </template>
+    <div v-if="!loginState" class="text-[12px]">N.B. Funziona solamente se l'account è stato creato con mail e password. Gli accessi con Google o Apple non Funzionano!</div>
   </div>
   </div>
   <div id="devices">
@@ -57,7 +64,7 @@
       </el-card>
     </div>
   </div>
-  <div id="footer" class="absolute bottom-0 left-0 right-0 "><div class="mb-3 flex justify-center "><span class="uppercase mr-2">Smarty ©</span><span>{{ date }}&nbsp - &nbsp</span><span>Made with ❤️ by&nbsp;</span><a class="hover:text-sky-600 hover:font-bold" target="_blank" href="https://federicomengascini.com">Federico</a></div></div>
+  <div id="footer" class="absolute bottom-0 left-0 right-0 "><div class="mb-3 flex justify-center "><span class="uppercase mr-2">Smarty ©</span><span>{{ date }}&nbsp - &nbsp</span><span>Made with ❤️ by&nbsp;</span><a class="hover:text-sky-600 " target="_blank" href="https://federicomengascini.com">Federico</a></div></div>
 </template>
 
 <script>
@@ -130,7 +137,7 @@ const refreshDevices = async () => {
     devices.value = discoveryDevices
     localStorage.setItem('devices', JSON.stringify(discoveryDevices))
   } catch (err) {
-    ElMessage.error(`Oops, device discovery error. (${err})`)
+    ElMessage.error(`Oops, errore aggiornamento dispositivi. (${err})`)
   }
 }
 
@@ -156,8 +163,63 @@ const triggerScene = async (device) => {
   }
 }
 </script>
-
+<style lang="postcss">
+.el-form-item__content {
+  @apply col-span-6 pr-0 sm:flex sm:pr-0;
+}
+.el-form-item{
+  @apply grid grid-cols-8
+}
+.el-button{
+  @apply col-span-3
+}
+.el-form-item__label{
+  @apply col-span-2 justify-start
+}
+.bottone{
+  @apply flex justify-center;
+  .el-form-item__content{
+    @apply pr-0 justify-center;
+  }
+}
+</style>
 <style scoped>
+/*** iPhone and iOS Form Input Zoom Fixes ***/
+/* Fix Input Zoom on devices older than iPhone 5: */
+@media screen and (device-aspect-ratio: 2/3) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 5, 5C, 5S, iPod Touch 5g */
+@media screen and (device-aspect-ratio: 40/71) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 6, iPhone 6s, iPhone 7  */
+@media screen and (device-aspect-ratio: 375/667) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"], 
+    input[type="tel"], input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
+@media screen and (device-aspect-ratio: 9/16) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="tel"], input[type="url"]{ font-size: 16px; }
+}
 #nav {
   margin: 0 auto;
 
@@ -194,7 +256,6 @@ const triggerScene = async (device) => {
   font-size: 20px;
   line-height: 0px;
 }
-
 
 .el-avatar {
   background: transparent;
